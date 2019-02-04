@@ -1,0 +1,39 @@
+<h2 class="float-right">Current Wallet Balance: $@ViewBag.CurrentUser.wallet</h2>
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Seller</th>
+            <th>Top bid</th>
+            <th>Time Remaining</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var x in @ViewBag.auctionlist)
+            {
+                <tr>
+                    <td><a href="auction/@x.id">@x.itemname</a></td>
+                    <td>@x.seller.first_name</td>
+                    <td>@x.bid</td>
+                    @{
+                        var today = DateTime.Now;
+                        TimeSpan remaining = x.endDate.Subtract(today);
+                        <td>@remaining.Days Days @remaining.Hours Hours @remaining.Minutes Minutes @remaining.Seconds Seconds</td>
+                    }
+                    @if (@x.sellerid == @ViewBag.CurrentUser.id)
+                    {
+                        <td><form action="delete/@x.id" method="POST"><input type="submit" value="Remove"></form></td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                </tr>
+            }
+        }
+        
+    </tbody>
+    
+</table>

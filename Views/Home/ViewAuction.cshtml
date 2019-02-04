@@ -1,0 +1,68 @@
+<h2 class="float-right">Current Wallet Balance: $@ViewBag.CurrentUser.wallet</h2>
+<h1 style="display: inline">@ViewBag.auct.itemname</h1><h3 style="display: inline"> - Seller: @ViewBag.auct.seller.first_name</h3>
+@{
+    var today = DateTime.Now;
+    TimeSpan remaining = ViewBag.auct.endDate.Subtract(today);
+    <h3>Time Remaining: @remaining.Days Days @remaining.Hours Hours @remaining.Minutes Minutes @remaining.Seconds Seconds</h3>
+}
+<h3>Description: </h3>
+    <h4>@ViewBag.auct.description</h4>
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Current Highest Bid</th>
+            <th>Bidder</th>
+        </tr>
+    </thead>
+    @{
+        if(@ViewBag.auct.bidders.Count < 1)
+        {
+            <tbody>
+                <tr>
+                    <td>@ViewBag.auct.bid</td>
+                    <td>Initial Bid</td>
+                </tr>
+            </tbody>
+        }
+        else
+        {
+            <tbody>
+                @foreach(var x in @ViewBag.bidlist)
+                {
+                    <tr>
+                        <td>@x.bidamount</td>
+                        @{
+                            if(x.bidderid == @ViewBag.CurrentUser.id)
+                            {
+                                <td>You!</td>
+                            }
+                            else
+                            {
+                                <td>@x.bidder.first_name @x.bidder.last_name</td>
+                            }
+                        }
+                    </tr>
+                }
+            </tbody>
+        }
+    }
+</table>
+@{
+    
+    var check = false;
+    foreach(var x in @ViewBag.auct.bidders)
+    {
+        if (x.bidderid == @ViewBag.CurrentUser.id)
+        {
+            check = true;
+            break;
+        }
+    }
+    if (check == false && @ViewBag.CurrentUser.id != @ViewBag.auct.seller.id)
+    {
+        <form action="/auction/@ViewBag.auct.id/placebid" method="POST">
+            <input type="number" name="bidamt"> 
+            <input type="submit" value="Submit!" class="simpleMar btn btn-default"> <span>@ViewBag.error</span>
+        </form>
+    }
+}

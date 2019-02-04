@@ -1,0 +1,23 @@
+@{
+    ViewData["Title"] = "AAAA";
+}
+
+@model beltfix.Models.Users
+
+<form action="login" method="POST"><table class="">
+    <h2>Login</h2>
+    <tr>
+        <td>Email: </td>
+        <td><input name="inEmail" type="email"></td>
+    </tr>
+    
+    <tr>
+        <td>Password: </td>
+        <td><input name="inPass" type="password"></td>
+    </tr>
+
+    <tr>
+        <td><input type="submit" value="Submit!"></td>
+        <td><span>@ViewBag.LogError</span></td>
+    </tr>
+</table></form>

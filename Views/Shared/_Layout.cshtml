@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Auctioneer!</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    </environment>
+</head>
+<body>
+    
+    <nav class="navbar navbar-expand-sm sticky-top navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">Auctioneer!</a>
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target=".navContent" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        @{
+            if(@ViewBag.CurrentUser == null)
+            {
+                CurrentUser newcurr = new CurrentUser();
+                newcurr.id = 0;
+                ViewBag.CurrentUser = newcurr;
+                List<object> temp = new List<object>();
+                temp.Add(newcurr);
+            }
+            if(@ViewBag.CurrentUser.id == 0)
+            {
+                <div class="navbar-collapse collapse navContent">
+                    <ul class="nav navbar-nav ml-auto justify-content-end">
+                        <li class="nav-item">
+                            <a class="" href="#"><button type="button" class="btn btn-link nav-link" data-toggle="modal" data-target="#exampleModal" onclick="$('#exampleModalLabel').text('Register'); $('#loginModal').hide(); $('#registerModal').show(); $('#loginSwitch').show(); $('#regSwitch').hide()"><span class="glyphicon glyphicon-user"></span> Sign Up</button></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="" href="#"><button type="button" class="btn btn-link nav-link" data-toggle="modal" data-target="#exampleModal" onclick="$('#exampleModalLabel').text('Login'); $('#registerModal').hide(); $('#loginModal').show(); $('#regSwitch').show(); $('#loginSwitch').hide()"><span class="glyphicon glyphicon-log-in"></span> Login</button></a>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <div class="navbar-collapse collapse navContent">
+                    <ul class="navbar-nav mr-auto">
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Dashboard">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="new">Create Auction</a>
+                        </li>
+
+                    </ul>
+                    <span class="welcome navbar-text">Welcome, @ViewBag.CurrentUser.name</span>
+                    <a asp-area="" asp-controller="Login" asp-action="logout" class="navbar-brand">Log Out</a>
+                </div>
+            }
+        }
+        
+    </nav>
+
+    <div class="container body-content">
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a href="#" id="regSwitch" class="modal-title" onclick="$('#loginModal').hide(); $('#registerModal').show(); $('#exampleModalLabel').text('Register'); $('#loginSwitch').show(); $('#regSwitch').hide()">New User?</a>
+                        <a href="#" id="loginSwitch" style="display: none;" onclick="$('#registerModal').hide(); $('#loginModal').show(); $('#exampleModalLabel').text('Login'); $('#regSwitch').show(); $('#loginSwitch').hide()">Already Have an Account?</a>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="loginModal">
+                        @Html.Partial("/Views/Login/Login.cshtml")
+                    </div>
+                    <div class="modal-body" style="display:none" id="registerModal">
+                        @Html.Partial("/Views/Login/Register.cshtml")
+                    </div>
+                </div>
+            </div>
+        </div>
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2019 - Kevin Capotosto</p>
+        </footer>
+    </div>
+
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

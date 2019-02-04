@@ -1,0 +1,36 @@
+@{
+    ViewData["Title"] = "Registration Page";
+}
+
+@model beltfix.Models.Users
+
+<form action="register" method="POST"><table class="">
+        <h2>Register</h2>
+        <tr>
+            <td>First Name: </td>
+            <td><input asp-for="first_name"></td>
+            <td><span asp-validation-for="first_name"></span></td>
+        </tr>
+        <tr>
+            <td>Last Name: </td>
+            <td><input asp-for="last_name"></td>
+            <td><span asp-validation-for="last_name"></span></td>
+        </tr>
+        <tr>
+            <td>Email: </td>
+            <td><input asp-for="email"></td>
+            <td><span asp-validation-for="email"></span></td>
+        </tr>
+        <tr>
+            <td>Password: </td>
+            <td><input asp-for="password"></td>
+            <td><span asp-validation-for="password" type="password"></span></td>
+        </tr>
+        <tr>
+            <td>Confirm Password: </td>
+            <td><input asp-for="password"></td>
+            <td><span type="password" asp-validation-for="password"></span></td>
+        </tr>
+    </table>
+    <input type="submit" value="Submit!">
+</form>

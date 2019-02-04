@@ -1,0 +1,26 @@
+@model beltfix.Models.Auctions
+<h2 class="float-right">Current Wallet Balance: $@ViewBag.CurrentUser.wallet</h2>
+<form action="create" method="POST"><table>
+    <h2>New Auction</h2>
+    <tr>
+        <td>Product Name: </td>
+        <td><input asp-for="itemname"></td>
+        <td><span asp-validation-for="itemname"></span></td>
+    </tr>
+    <tr>
+        <td>Description: </td>
+        <td><textarea asp-for="description"></textarea></td>
+        <td><span asp-validation-for="description"></span></td>
+    </tr>
+    <tr>
+        <td>Starting Bid: </td>
+        <td><input asp-for="bid"></input></td>
+        <td><span asp-validation-for="bid"></span></td>
+    </tr>
+    <tr>
+        <td>Date: </td>
+        <td><input asp-for="endDate" type="date" min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")"></input> NOTE: Auctions End at Midnight of listed day!</td>
+        <td><span asp-validation-for="endDate"></span></td>
+    </tr>
+    <tr><td><input type="submit" value="Submit!" class="simpleMar btn btn-default"></td></tr>
+</table></form>
