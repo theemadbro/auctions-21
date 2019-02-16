@@ -52,8 +52,10 @@
     }
 </table>
 @{
-    
-    var check = false;
+    //check if 
+    int newestbid = @ViewBag.auct.bidders.Count -1;
+    Bidders highestbid = @ViewBag.auct.bidders[newestbid];
+    <!-- var check = false;
     foreach(var x in @ViewBag.auct.bidders)
     {
         if (x.bidderid == @ViewBag.CurrentUser.id)
@@ -61,8 +63,9 @@
             check = true;
             break;
         }
-    }
-    if (check == false && @ViewBag.CurrentUser.id != @ViewBag.auct.seller.id)
+    } -->
+    //show bid form, only if 
+    if (@ViewBag.CurrentUser.id != highestbid.bidderid && @ViewBag.CurrentUser.id != @ViewBag.auct.seller.id)
     {
         <form action="/auction/@ViewBag.auct.id/placebid" method="POST">
             <input type="number" name="bidamt"> 

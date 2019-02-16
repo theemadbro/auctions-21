@@ -18,10 +18,19 @@
             @{
                 foreach (var x in @ViewBag.auctionlist)
                 {
+                    int newestbid = @x.bidders.Count -1;
+                    int newbidid = @x.bidders[newestbid].bidder.id;
+                    string highestbidder = "person";
+                    if (newbidid == @ViewBag.CurrentUser.id) {
+                        highestbidder = "You!";
+                    }
+                    else {
+                        highestbidder = x.bidders[newestbid].bidder.first_name;
+                    }
                     <tr>
                         <td><a href="auction/@x.id">@x.itemname</a></td>
                         <td>@x.seller.first_name</td>
-                        <td>@x.bid</td>
+                        <td>@x.bid - @highestbidder</td>
                         @{
                             var today = DateTime.Now;
                             TimeSpan remaining = x.endDate.Subtract(today);
