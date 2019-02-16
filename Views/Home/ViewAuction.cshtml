@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "@ViewBag.auct.itemname";
+    ViewData["Title"] = @ViewBag.auct.itemname;
 }
 
 <h2 class="float-right">Current Wallet Balance: $@ViewBag.CurrentUser.wallet</h2>
@@ -52,9 +52,13 @@
     }
 </table>
 @{
-    //check if 
-    int newestbid = @ViewBag.auct.bidders.Count -1;
-    Bidders highestbid = @ViewBag.auct.bidders[newestbid];
+    int newestbid = 0;
+    int highestbid = 0;
+    if (@ViewBag.auct.bidders.Count != 0){
+        newestbid = @ViewBag.auct.bidders.Count -1;
+        highestbid = @ViewBag.auct.bidders[newestbid].bidderid;
+    }
+    
     <!-- var check = false;
     foreach(var x in @ViewBag.auct.bidders)
     {
@@ -65,7 +69,7 @@
         }
     } -->
     //show bid form, only if 
-    if (@ViewBag.CurrentUser.id != highestbid.bidderid && @ViewBag.CurrentUser.id != @ViewBag.auct.seller.id)
+    if (@ViewBag.CurrentUser.id != highestbid && @ViewBag.CurrentUser.id != @ViewBag.auct.seller.id)
     {
         <form action="/auction/@ViewBag.auct.id/placebid" method="POST">
             <input type="number" name="bidamt"> 

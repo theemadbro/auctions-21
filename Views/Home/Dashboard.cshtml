@@ -18,15 +18,26 @@
             @{
                 foreach (var x in @ViewBag.auctionlist)
                 {
-                    int newestbid = @x.bidders.Count -1;
-                    int newbidid = @x.bidders[newestbid].bidder.id;
                     string highestbidder = "person";
-                    if (newbidid == @ViewBag.CurrentUser.id) {
-                        highestbidder = "You!";
+                    int newestbid = @x.bidders.Count -1;
+                    if (newestbid == -1) {
+                        newestbid = 0;
                     }
-                    else {
-                        highestbidder = x.bidders[newestbid].bidder.first_name;
+                    if (x.bidders.Count == 0)
+                    {
+                        highestbidder = "New Auction!";
                     }
+                    else
+                    {
+                        int newbidid = @x.bidders[newestbid].bidder.id;
+                        if (newbidid == @ViewBag.CurrentUser.id) {
+                            highestbidder = "You!";
+                        }
+                        else {
+                            highestbidder = x.bidders[newestbid].bidder.first_name;
+                        }
+                    }
+                    
                     <tr>
                         <td><a href="auction/@x.id">@x.itemname</a></td>
                         <td>@x.seller.first_name</td>
