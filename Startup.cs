@@ -31,16 +31,18 @@ namespace beltfix
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (!env.IsDevelopment())
+            env.EnvironmentName = EnvironmentName.Production;
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseStatusCodePages();
             }
             else
             {
-                app.UseExceptionHandler("/Error/500");
+                app.UseExceptionHandler("/error");
             }
-
+            
+            app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseSession();
             app.UseMvc(routes =>

@@ -23,7 +23,7 @@
     </tr>
     <tr>
         <td>Date: </td>
-        <td><input asp-for="endDate" type="date" min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")"></input> NOTE: Auctions End at Midnight of listed day!</td>
+        <td><input asp-for="endDate" type="date" min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")"></input> NOTE: Auctions End at Midnight PST of listed day!</td>
         <td><span asp-validation-for="endDate"></span></td>
     </tr>
     <tr><td><input type="submit" value="Submit!" class="simpleMar btn btn-default"></td></tr>

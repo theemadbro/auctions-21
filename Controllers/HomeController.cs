@@ -230,6 +230,10 @@ namespace beltfix.Controllers
                 }
                 ViewBag.CurrentUser = ret[0];
                 Auctions getauct = _context.auctions.Include(a => a.seller).Include(a => a.bidders).SingleOrDefault(w => w.id == auctid);
+                if (getauct == null)
+                {
+                    return RedirectToAction("Dashboard");
+                }
                 List<Bidders> bidlist = _context.bidders.Where(b => b.auctionid == auctid).Include(b => b.bidder).OrderByDescending(b => b.bidamount).ToList();
                 ViewBag.auct = getauct;
                 ViewBag.bidlist = bidlist;
