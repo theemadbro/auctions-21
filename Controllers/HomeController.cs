@@ -120,11 +120,7 @@ namespace beltfix.Controllers
         {
             CheckFinishedAuctions();
             List<CurrentUser> ret = HttpContext.Session.GetObjectFromJson<List<CurrentUser>>("curr");
-            if (ret == null)
-            {
-                return RedirectToAction("");
-            }
-            else if (ret[0].id == 0)
+            if (ret == null || ret[0].id == 0)
             {
                 return RedirectToAction("");
             }
@@ -145,11 +141,7 @@ namespace beltfix.Controllers
         public IActionResult New()
         {
             List<CurrentUser> ret = HttpContext.Session.GetObjectFromJson<List<CurrentUser>>("curr");
-            if (ret == null)
-            {
-                return RedirectToAction("");
-            }
-            else if (ret[0].id == 0)
+           if (ret == null || ret[0].id == 0)
             {
                 return RedirectToAction("");
             }
@@ -165,11 +157,7 @@ namespace beltfix.Controllers
         public IActionResult Create(Auctions inp)
         {
             List<CurrentUser> ret = HttpContext.Session.GetObjectFromJson<List<CurrentUser>>("curr");
-            if (ret == null)
-            {
-                return RedirectToAction("");
-            }
-            else if (ret[0].id == 0)
+            if (ret == null || ret[0].id == 0)
             {
                 return RedirectToAction("");
             }
@@ -195,11 +183,7 @@ namespace beltfix.Controllers
         public IActionResult Delete(int auctid)
         {
             List<CurrentUser> ret = HttpContext.Session.GetObjectFromJson<List<CurrentUser>>("curr");
-            if (ret == null)
-            {
-                return RedirectToAction("");
-            }
-            else if (ret[0].id == 0)
+            if (ret == null || ret[0].id == 0)
             {
                 return RedirectToAction("");
             }
@@ -221,11 +205,17 @@ namespace beltfix.Controllers
         }
 
         [HttpGet]
+        [Route("auction")]
+        public IActionResult Auction()
+        {
+            return RedirectToAction("Dashboard");
+        }
+        [HttpGet]
         [Route("auction/{auctid}")]
         public IActionResult ViewAuction(int auctid)
         {
             List<CurrentUser> ret = HttpContext.Session.GetObjectFromJson<List<CurrentUser>>("curr");
-            if (ret[0].id == 0)
+            if (ret == null || ret[0].id == 0)
             {
                 return RedirectToAction("");
             }
@@ -250,7 +240,7 @@ namespace beltfix.Controllers
         public IActionResult PlaceBid(int auctid, int bidamt)
         {
             List<CurrentUser> ret = HttpContext.Session.GetObjectFromJson<List<CurrentUser>>("curr");
-            if (ret[0].id == 0)
+            if (ret == null || ret[0].id == 0)
             {
                 return RedirectToAction("");
             }

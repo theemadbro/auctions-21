@@ -3,14 +3,17 @@
 }
 
 <h2 class="float-right">Current Wallet Balance: $@ViewBag.CurrentUser.wallet</h2>
-<h1 style="display: inline">@ViewBag.auct.itemname</h1><h3 style="display: inline"> - Seller: @ViewBag.auct.seller.first_name</h3>
+<h1 style="display: inline">@ViewBag.auct.itemname</h1>
+<hr>
+<h2 style="display: inline">Seller: @ViewBag.auct.seller.first_name</h2>
 @{
     var today = DateTime.Now;
     TimeSpan remaining = ViewBag.auct.endDate.Subtract(today);
-    <h3>Time Remaining: @remaining.Days Days @remaining.Hours Hours @remaining.Minutes Minutes @remaining.Seconds Seconds</h3>
+    <h4 class="float-right">Time Remaining: @remaining.Days Days @remaining.Hours Hours @remaining.Minutes Minutes @remaining.Seconds Seconds</h4>
 }
+<hr>
 <h3>Description: </h3>
-    <h4>@ViewBag.auct.description</h4>
+    <h4 style="text-indent: 50px;">@ViewBag.auct.description</h4>
 <table class="table table-bordered table-striped table-hover">
     <thead>
         <tr>

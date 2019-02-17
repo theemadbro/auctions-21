@@ -59,6 +59,10 @@ namespace beltfix.Controllers
         public IActionResult ProcessLogin(string inEmail, string inPass)
         {
             List<CurrentUser> ret = HttpContext.Session.GetObjectFromJson<List<CurrentUser>>("curr");
+            if (ret == null)
+            {
+                return RedirectToAction("");
+            }
             ViewBag.CurrentUser = ret[0];
             Users check = _context.users.SingleOrDefault(x => x.email == inEmail);
             if (check != null && inPass != null)
@@ -121,6 +125,10 @@ namespace beltfix.Controllers
         public IActionResult ProcessRegister(Users inp)
         {
             List<CurrentUser> ret = HttpContext.Session.GetObjectFromJson<List<CurrentUser>>("curr");
+            if (ret == null)
+            {
+                return RedirectToAction("");
+            }
             ViewBag.CurrentUser = ret[0];
             if (ModelState.IsValid)
             {
