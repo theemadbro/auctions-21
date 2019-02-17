@@ -190,7 +190,7 @@ namespace beltfix.Controllers
             else
             {
                 Auctions todelete = _context.auctions.Include(w => w.bidders).SingleOrDefault(w => w.id == auctid);
-                if(ret[0].id != todelete.sellerid)
+                if(ret[0].id != todelete.sellerid || todelete == null)
                 {
                     return RedirectToAction("Dashboard");
                 }
@@ -248,10 +248,11 @@ namespace beltfix.Controllers
             {
                 Auctions getauct = _context.auctions.Include(a => a.seller).Include(a => a.bidders).SingleOrDefault(a => a.id == auctid);
                 List<Bidders> bidlist = _context.bidders.Where(b => b.auctionid == auctid).Include(b => b.bidder).OrderBy(b => b.bidamount).ToList();
-                if(getauct.bid > bidamt)
+                if(getauct.bid >= bidamt)
                 {
                     ViewBag.CurrentUser = ret[0];
                     ViewBag.auct = getauct;
+                    ViewBag.bidlist = bidlist;
                     ViewBag.error = "Your Bid must be higher than the current highest!";
                     return View("ViewAuction");
                 }
@@ -259,7 +260,8 @@ namespace beltfix.Controllers
                 {
                     ViewBag.CurrentUser = ret[0];
                     ViewBag.auct = getauct;
-                    ViewBag.error = "Your can't bid more than what you have!";
+                    ViewBag.bidlist = bidlist;
+                    ViewBag.error = "Your can't Bid more than what you have!";
                     return View("ViewAuction");
                 }
                 Bidders newbid = new Bidders();
