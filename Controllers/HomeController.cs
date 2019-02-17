@@ -57,7 +57,7 @@ namespace beltfix.Controllers
                     }
                     else
                     {
-                        Bidders highestbidder = _context.bidders.Where(b => b.auctionid == auct.id).Include(b => b.bidder).OrderBy(b => b.bidamount).First();
+                        Bidders highestbidder = _context.bidders.Where(b => b.auctionid == auct.id).Include(b => b.bidder).OrderByDescending(b => b.bidamount).First();
                         auct.seller.wallet += auct.bid;
                         if (ret[0].id == auct.seller.id)
                         {
@@ -140,8 +140,9 @@ namespace beltfix.Controllers
         [Route("new")]
         public IActionResult New()
         {
+            CheckFinishedAuctions();
             List<CurrentUser> ret = HttpContext.Session.GetObjectFromJson<List<CurrentUser>>("curr");
-           if (ret == null || ret[0].id == 0)
+            if (ret == null || ret[0].id == 0)
             {
                 return RedirectToAction("");
             }
@@ -214,6 +215,7 @@ namespace beltfix.Controllers
         [Route("auction/{auctid}")]
         public IActionResult ViewAuction(int auctid)
         {
+            CheckFinishedAuctions();
             List<CurrentUser> ret = HttpContext.Session.GetObjectFromJson<List<CurrentUser>>("curr");
             if (ret == null || ret[0].id == 0)
             {
@@ -239,6 +241,7 @@ namespace beltfix.Controllers
         [Route("auction/{auctid}/placebid")]
         public IActionResult PlaceBid(int auctid, int bidamt)
         {
+            CheckFinishedAuctions();
             List<CurrentUser> ret = HttpContext.Session.GetObjectFromJson<List<CurrentUser>>("curr");
             if (ret == null || ret[0].id == 0)
             {
